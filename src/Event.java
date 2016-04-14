@@ -1,12 +1,9 @@
 
 
 abstract public class Event {
-	private long evtTime;
-	public Event(long eventTime) {
-		evtTime = eventTime;
-	}
-	public boolean ready() {
-		return System.currentTimeMillis() >= evtTime;
+	private int prioridade;
+	public Event(int prioridade) {
+		this.prioridade = prioridade;
 	}
 	abstract public void action();
 	abstract public String description();
