@@ -1,7 +1,7 @@
 
 
 class EventSet {
-	private Event[] events = new Event[2];
+	private Event[] events = new Event[100];
 	private int index = 0;
 	private int next = 0;
 	public void add(Event e) {
