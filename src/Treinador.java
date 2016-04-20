@@ -3,6 +3,7 @@ public class Treinador {
 	private String nome;
 	private Pokemon[] pokemons = new Pokemon[6];
 	private int indicePokemon = 0;
+	private int pkmAtivo = 4;
 	
 	public Treinador (String nome, Pokemon[] pokemons) {
 		this.nome = nome;
@@ -23,5 +24,7 @@ public class Treinador {
 		indicePokemon = index;
 	}
 	
-	
+	public int getAtivo (){
+		return pkmAtivo;
+	}
 }

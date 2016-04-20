@@ -8,7 +8,7 @@ class EventSet {
 	public void add(Event e) {
 		if (index >= events.length)
 			return;
-		//Verifica isso, eu buguei
+		/*//Verifica isso, eu buguei
 		//Caso a prioridade do evento a ser adicionado seja meonor do que a do evento antes dele
 		if (e.getPrioridade() < events[index - 1].getPrioridade()) {
 			events[index] = events[index - 1]; //Coloca o evento anterior na ultima posicao
@@ -16,7 +16,7 @@ class EventSet {
 			index++;
 			return;
 		}
-		//Caso a prioridade seja maior ou igual
+		//Caso a prioridade seja maior ou igual*/
 		events[index++] = e; //Só adiciona o evento
 	}
 	

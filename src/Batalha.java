@@ -1,48 +1,30 @@
 
 
 public class Batalha extends Controller {
-	private boolean btlOn = true;	//Controlar se a batalha ainda está acontecendo ou não
 	Treinador red;
 	Treinador green;
 	
-	public void setarBatalha (Treinador treinador1, Treinador treinador2) {
+	private void setarBatalha (Treinador treinador1, Treinador treinador2) {
 		red = treinador1;
 		green = treinador2;
 	}
-	private boolean batalhaOn () {
-		return btlOn;
+	
+	/*Verifica se o pokemon atacado foi derrotado e o treinador ainda possui pokemons para continuar a batalha*/
+	private String pkmDerrotado (Treinador atacado){
+		String retornar = "";
+		if (atacado.getPokemon().getHp() == 0){
+			retornar.concat( "\n" + atacado.getPokemon().getNome() + " de " + atacado.getNome() + " foi derrotado!\n");
+			if(atacado.getAtivo() == 1){
+				/*Se não existirem mais pokemons disponíveis o treinador perde a batalha*/
+				finalizeEvent();
+				retornar.concat(atacado.getNome() + " perdeu a Batalha!");
+			}
+		}
+		return retornar;
 	}
 	
 	/*Pokemon de um treinador ataca o pokemon ativo do outro treinador*/
-	private class Atacar extends Event {
-		private int atkIndex;
-		private String atacante;
-		
-		public Atacar (int index, String atacante) {
-			super(4);
-			atkIndex = index;
-			this.atacante = atacante;
-		}
-		
-		public void action () {
-			if (red.getNome().equals(atacante)) {
-				green.getPokemon().mudaHP(-red.getPokemon().atacar(atkIndex));
-				return;
-			}
-			red.getPokemon().mudaHP(-green.getPokemon().atacar(atkIndex));
-		}
-		
-		public String description () {
-			if (red.getNome().equals(atacante)) {
-				return (red.getPokemon().getNome() + " de "  + red.getNome() +  " utilizou " + red.getPokemon().ataque(atkIndex)  + "!" +
-						"\n" + green.getPokemon().getNome() + " de " + green.getNome() + " esta com " + green.getPokemon().getHp() + "HP.");
-			}
-			return (green.getPokemon().getNome() + " de "  + green.getNome() +  " utilizou " + green.getPokemon().ataque(atkIndex) +
-					"\n" + red.getPokemon().getNome() + " de " + red.getNome() + " está com " + red.getPokemon().getHp() + "HP");
-		}
-	}
-	
-	/** Sugestão. Com isso não seria necessário os treinadores como atributos
+	/** EU IA FAZER EXATAMENTE ISSO, MAS FUI ASSISTIR O MASTERCHEF. E BOTA O QUE FOR PRA APAGAR EM CAPS PRA FACILITAR DEPOIS. DEIXA EM AZUL TBM **/
  	public class Atacar extends Event {
 		private int atkIndex;
 		private Treinador atacante;
@@ -63,27 +45,29 @@ public class Batalha extends Controller {
 			return (atacante.getPokemon().getNome() + " de "  + atacante.getNome() +  " utilizou " + 
 					atacante.getPokemon().ataque(atkIndex)  + "!" + "\n" + 
 					defensor.getPokemon().getNome() + " de " + defensor.getNome() + 
-					" esta com " + defensor.getPokemon().getHp() + "HP.");
+					" esta com " + defensor.getPokemon().getHp() + "HP." + pkmDerrotado(defensor));
 		}
 	}
-	*/
 	
 	/*Treinador utiliza o itme de cura em um pokemon */
 	public class UsarItem extends Event {
 		private Treinador curador;
+		private int diferencaHp;
 		
-		public UsarItem (int index, Treinador curador) {
+		public UsarItem (Treinador curador) {
 			super(3);
 			this.curador = curador;
 		}
 		
 		public void action () {
+			diferencaHp = curador.getPokemon().getHp();
 			curador.getPokemon().mudaHP(20);
+			diferencaHp = (curador.getPokemon().getHp() - diferencaHp);
 		}
 		
 		public String description () {
-			return (curador.getPokemon().getNome() + " de " + curador.getNome() + 
-					" foi curado em 20HP \nNovo HP: " + curador.getPokemon().getHp() );
+			return (curador.getNome() + " utilizou uma poção. " + curador.getPokemon().getNome() +
+					" foi curado em " + diferencaHp +  " HP. Novo HP: " + curador.getPokemon().getHp() + " HP.");
 		}
 	}
 	
@@ -93,10 +77,10 @@ public class Batalha extends Controller {
 		private Treinador trocador;
 		private String pkmAnterior;
 		
-		public TrocarPokemon (int index, Treinador trocador){   //  <--- DÁ PRA FAZER ASSIM
-			super(2);											//	<--- OLHA ESSAS LINHAS
-			pkmIndex = index;									//	<--- ACHO QUE FACILITA
-			this.trocador = trocador;							//	<--- BASTANTE ---> SIM, PODERÍAMOS FAZER ISSO NA CLASSE ATACAR TAMBÉM
+		public TrocarPokemon (int index, Treinador trocador){
+			super(2);
+			pkmIndex = index;
+			this.trocador = trocador;
 		}
 		
 		public void action () {
@@ -120,14 +104,11 @@ public class Batalha extends Controller {
 		}
 		
 		public void action() {
-			finalizeEvent();	//Dê uma olhada na classe Controller
-			btlOn = false;
-			//Não sei se isso funciona
-			/* NAO SEI COMO FAZER PARA FUGIR DA BATALHA */
+			finalizeEvent();
 		}
 		
 		public String description() { 
-			return (desistente.getNome() + " fugiu da batalha Pokemon");
+			return (desistente.getNome() + " fugiu da batalha Pokemon!");
 		}
 	}
 	
@@ -163,10 +144,10 @@ public class Batalha extends Controller {
 			setarBatalha(tr1, tr2);
 			
 			/*Inicio dos eventos*/
-			while (batalhaOn()) {
-				addEvent(new TrocarPokemon(1, tr2));
-				addEvent(new Atacar(2, nomeTreinador1));
-			}
+			addEvent(new TrocarPokemon(1, tr2));
+			addEvent(new Atacar(2, tr1, tr2));
+			addEvent(new UsarItem(tr2));
+			addEvent(new Atacar(1, tr2, tr1));
 		}
 		
 		public String description (){
