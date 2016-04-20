@@ -37,7 +37,7 @@ public class Pokemon {
 		return hp;
 	}
 	
-	/*retorn nome do pokemon*/
+	/*retorna nome do pokemon*/
 	public String getNome (){
 		return nome;
 	}

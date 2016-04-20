@@ -15,7 +15,7 @@ public class Batalha extends Controller {
 		private String atacante;
 		
 		public Atacar (int index, String atacante) {
-			super(3);
+			super(4);
 			atkIndex = index;
 			this.atacante = atacante;
 		}
@@ -38,6 +38,27 @@ public class Batalha extends Controller {
 		}
 	}
 	
+	/*Treinador utiliza o itme de cura em um pokemon */
+	public class UsarItem extends Event {
+		private int pkmIndex;
+		private Treinador curador;
+		
+		public UsarItem (int index, Treinador curador) {
+			super(3);
+			pkmIndex = index;
+			this.curador = curador;
+		}
+		
+		public void action () {
+			curador.getPokemon().mudaHP(20);
+		}
+		
+		public String description () {
+			return (curador.getPokemon().getNome() + " de " + curador.getNome() + 
+					" foi curado em 20HP \nNovo HP: " + curador.getPokemon().getHp() );
+		}
+	}
+	
 	/*Treinador troca seu pokemon por outro que possui*/
 	public class TrocarPokemon extends Event {
 		private int pkmIndex;
@@ -45,9 +66,9 @@ public class Batalha extends Controller {
 		private String pkmAnterior;
 		
 		public TrocarPokemon (int index, Treinador trocador){   //  <--- DÁ PRA FAZER ASSIM
-			super(1);											//	<--- OLHA ESSAS LINHAS
+			super(2);											//	<--- OLHA ESSAS LINHAS
 			pkmIndex = index;									//	<--- ACHO QUE FACILITA
-			this.trocador = trocador;							//	<--- BASTANTE
+			this.trocador = trocador;							//	<--- BASTANTE ---> SIM, PODERÍAMOS FAZER ISSO NA CLASSE ATACAR TAMBÉM
 		}
 		
 		public void action () {
@@ -56,10 +77,28 @@ public class Batalha extends Controller {
 		}
 		
 		public String description () {
-			return (pkmAnterior + " de " + trocador.getNome() + " foi substituido por " + trocador.getPokemon().getNome());
+			return (pkmAnterior + " de " + trocador.getNome() + 
+					" foi substituido por " + trocador.getPokemon().getNome());
 		}
 	}
 	
+	/*Fugir da batalha*/
+	public class Fugir extends Event {
+		private Treinador desistente;
+		
+		public Fugir (Treinador desistente) {
+			super(1);
+			this.desistente = desistente;
+		}
+		
+		public void action() {
+			/* NAO SEI COMO FAZER PARA FUGIR DA BATALHA */
+		}
+		
+		public String description() { 
+			return (desistente.getNome() + " fugiu da batalha Pokemon");
+		}
+	}
 	
 	/*Inicia a batalha pokemon*/
 	public class Restart extends Event{
