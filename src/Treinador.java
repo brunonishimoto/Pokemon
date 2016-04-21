@@ -27,4 +27,17 @@ public class Treinador {
 	public int getAtivo (){
 		return pkmAtivo;
 	}
+	
+	public void pkmIncapacidado (){
+		pkmAtivo--;
+	}
+	
+	public void proxPkmAtivo (){
+		for(int i = 0; i < 6; i++){
+			if (pokemons[i].getHp() > 0){
+				indicePokemon = i;
+				return;
+			}
+		}
+	}
 }

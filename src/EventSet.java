@@ -32,6 +32,10 @@ class EventSet {
 		return events[next];
 	}
 	
+	public Event getCurrent() {
+		return events[next];
+	}
+	
 	public void removeCurrent() {
 		events[next] = null;
 	}
