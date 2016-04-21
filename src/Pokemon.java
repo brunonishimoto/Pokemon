@@ -7,7 +7,6 @@ public class Pokemon {
 	private int maxHp;
 	private Ataque[] atk = new Ataque[4];
 	
-	// 19-04: alteracao dos vetores que eram recebidos como parametros por variaveis normais
 	public Pokemon (String nome, String tipo, int hp, String nomeAtk1, String nomeAtk2,
 					String nomeAtk3, String nomeAtk4, int dano1, int dano2, int dano3, int dano4) {
 		this.nome = nome;

@@ -7,7 +7,6 @@ abstract public class Event {
 		this.prioridade = prioridade;
 	}
 	
-	//Veja se isso é realmente necessário
 	public int getPrioridade () {
 		return prioridade;
 	}

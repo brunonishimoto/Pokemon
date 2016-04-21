@@ -21,10 +21,11 @@ public class Batalha extends Controller {
 			}
 			else{
 				atacado.pkmIncapacidado();
-				retornar = retornar.concat(atacado.getPokemon().getNome() + " foi substituido por ");
+				retornar = retornar.concat(atacado.getPokemon().getNome() + " de " + atacado.getNome() + " foi substituido por ");
 				atacado.proxPkmAtivo();
 				retornar = retornar.concat(atacado.getPokemon().getNome() + ".");
 			}
+			setSegundoEvt();
 		}
 		return retornar;
 	}
@@ -73,7 +74,7 @@ public class Batalha extends Controller {
 		
 		public String description () {
 			return (curador.getNome() + " utilizou uma poção. " + curador.getPokemon().getNome() +
-					" foi curado em " + diferencaHp +  " HP. Novo HP: " + curador.getPokemon().getHp() + " HP.");
+					" foi curado em " + diferencaHp +  "HP. Novo HP: " + curador.getPokemon().getHp() + "HP.");
 		}
 	}
 	
@@ -95,7 +96,7 @@ public class Batalha extends Controller {
 		}
 		
 		public String description () {
-			return (trocador.getNome() + " substituiu " + pkmAnterior + " por " + trocador.getPokemon().getNome());
+			return (trocador.getNome() + " substituiu " + pkmAnterior + " por " + trocador.getPokemon().getNome() + ".");
 		}
 	}
 	
@@ -110,6 +111,7 @@ public class Batalha extends Controller {
 		
 		public void action() {
 			finalizeEvent();
+			setSegundoEvt();
 		}
 		
 		public String description() { 
