@@ -1,4 +1,4 @@
-
+import java.util.Random;
 
 public class Batalha extends Controller {
 	Treinador red;
@@ -9,33 +9,13 @@ public class Batalha extends Controller {
 		green = treinador2;
 	}
 	
-	/*Verifica se o pokemon atacado foi derrotado e o treinador ainda possui pokemons para continuar a batalha*/
-	private String pkmDerrotado (Treinador atacado){
-		String retornar = "";
-		if (atacado.getPokemon().getHp() == 0){
-			retornar = retornar.concat( "\n" + atacado.getPokemon().getNome() + " de " + atacado.getNome() + " foi derrotado!\n");
-			if(atacado.getAtivo() == 1){
-				/*Se não existirem mais pokemons disponíveis o treinador perde a batalha*/
-				finalizeEvent();
-				retornar = retornar.concat(atacado.getNome()  + " não possui mais pokemons disponíveis. " + atacado.getNome() +  " perdeu a Batalha!");
-			}
-			else{
-				atacado.pkmIncapacidado();
-				retornar = retornar.concat(atacado.getPokemon().getNome() + " de " + atacado.getNome() + " foi substituido por ");
-				atacado.proxPkmAtivo();
-				retornar = retornar.concat(atacado.getPokemon().getNome() + ".");
-			}
-			setSegundoEvt();
-		}
-		return retornar;
-	}
-	
 	/*Pokemon de um treinador ataca o pokemon ativo do outro treinador*/
-	/** EU IA FAZER EXATAMENTE ISSO, MAS FUI ASSISTIR O MASTERCHEF. E BOTA O QUE FOR PRA APAGAR EM CAPS PRA FACILITAR DEPOIS. DEIXA EM AZUL TBM **/
  	public class Atacar extends Event {
 		private int atkIndex;
 		private Treinador atacante;
 		private Treinador defensor;
+		private double multiplicador;
+		private String retornar = "";
 		
 		public Atacar (int index, Treinador atacante, Treinador defensor) {
 			super(4);
@@ -44,17 +24,44 @@ public class Batalha extends Controller {
 			this.defensor  = defensor;
 		}
 		
+		/*Verifica se o pokemon atacado foi derrotado e o treinador ainda possui pokemons para continuar a batalha*/
+		private String pkmDerrotado (Treinador atacado){
+			String retornar = "";
+			if (atacado.getPokemon().getHp() == 0){
+				retornar = retornar.concat( "\n" + atacado.getPokemon().getNome() + " de " + atacado.getNome() + " foi derrotado!\n");
+				if(atacado.getAtivo() == 1){
+					/*Se não existirem mais pokemons disponíveis o treinador perde a batalha*/
+					finalizeEvent();
+					retornar = retornar.concat(atacado.getNome()  + " não possui mais pokemons disponíveis. " + atacado.getNome() +  " perdeu a Batalha!");
+				}
+				else{
+					atacado.pkmIncapacidado();
+					retornar = retornar.concat(atacado.getPokemon().getNome() + " de " + atacado.getNome() + " foi substituido por ");
+					atacado.proxPkmAtivo();
+					retornar = retornar.concat(atacado.getPokemon().getNome() + ".");
+				}
+				setSegundoEvt();
+			}
+			return retornar;
+		}
+		
 		public void action () {
-			double multiplicador = atacante.getPokemon().getMultiplicador(defensor.getPokemon().getTipo());
+			multiplicador = atacante.getPokemon().getMultiplicador(defensor.getPokemon().getTipo());
 			defensor.getPokemon().mudaHP(-(int) (atacante.getPokemon().atacar(atkIndex) * multiplicador));
 		}
 		
 		public String description () {
-			double multiplicador = atacante.getPokemon().getMultiplicador(defensor.getPokemon().getTipo());
-			return (atacante.getPokemon().getNome() + " de "  + atacante.getNome() +  " utilizou " + 
-					atacante.getPokemon().ataque(atkIndex) + " e causou " + (int)(atacante.getPokemon().atacar(atkIndex)*multiplicador)
-					+ "de dano!" + "\n" + defensor.getPokemon().getNome() + " de " + defensor.getNome() + 
-					" esta com " + defensor.getPokemon().getHp() + "HP." + pkmDerrotado(defensor));
+			retornar = retornar.concat(atacante.getPokemon().getNome() + " de "  + atacante.getNome() +  " utilizou " + atacante.getPokemon().ataque(atkIndex) +
+										" e causou " + (int)(atacante.getPokemon().atacar(atkIndex)*multiplicador)+ " de dano!");
+			if(multiplicador == 2)
+				retornar = retornar.concat("\nO ataque foi super efetivo!");
+			else if(multiplicador == 0.5)
+				retornar = retornar.concat("\nO ataque não foi muito efetivo!");
+			else if(multiplicador == 0)
+				retornar = retornar.concat("\n" + defensor.getPokemon().getNome() + "não é afetado por ataques desse tipo!");
+			retornar = retornar.concat("\n" + defensor.getPokemon().getNome() + " de " + defensor.getNome() + " esta com " +
+										defensor.getPokemon().getHp() + "HP." + pkmDerrotado(defensor));
+			return retornar;
 		}
 	}
 	
@@ -123,9 +130,9 @@ public class Batalha extends Controller {
 	
 
 	/*Inicia a batalha pokemon*/
-	public class Restart extends Event{
+	public class Versus extends Event{
 		
-		public Restart (){
+		public Versus (){
 			super(0);
 		}
 		
@@ -180,9 +187,66 @@ public class Batalha extends Controller {
 		}
 	}
 	
+	public class AndarChao extends Event{
+		public AndarChao (){
+			super(0);
+		}
+		
+		public void action (){
+			return;
+		}
+		
+		public String description (){
+			return ("Andando pelo chão comum.");
+		}
+	}
+	
+	public class AndarGramado extends Event{
+		private int achouPkm, qualPkm;
+		private Random gerador = new Random();
+		
+		public AndarGramado (){
+			super(0);
+		}
+		
+		public Pokemon definePkm (){
+			qualPkm = gerador.nextInt(100);
+			if(qualPkm < 5)
+				return (new Pokemon("Mewtwo", 13, 110, "Comedor de Sonhos", "Pancada Psíquica", "Corte Psíquico", "Confusão", 25, 35, 26, 15));
+			if(qualPkm < 20)
+				return (new Pokemon("Articuno", 14, 95, "Nevasca", "Raio de Gelo", "Sopro de Congelamento", "Caco de Gelo", 32, 25, 20, 15));
+			if(qualPkm < 50)
+				return (new Pokemon("Meowth", 0, 65, "Talhada", "Fachada", "Retalhar", "Dia do Pagamento", 20, 25, 22, 12));
+			return (new Pokemon("Bellsprout", 11, 50, "Raio Solar", "Folha Navalha", "Chicote de Cipó", "Esfera de Energia", 23, 15, 10, 15));
+		}
+		
+		public void action (){
+			achouPkm = gerador.nextInt(100);
+			if (achouPkm <= 80){
+				Pokemon[] pk1 = new Pokemon[6];
+				pk1[0] = new Pokemon("Charizard", 9, 78, "Lança Chamas", "Super Aquecimento", "Explosão de Fogo", "Brasa", 20, 30, 24, 10);
+				pk1[1] = new Pokemon("Venosaur", 11, 80, "Esfera de Energia", "Folha Navalha", "Raio Solar", "Danca de Pétalas", 18, 10, 30, 20);
+				pk1[2] = new Pokemon("Blastoise", 10, 79, "Jato de Água", "Rajada de Bolhas", "Surf", "Hidro Bomba", 20, 10, 25, 30);
+				pk1[3] = new Pokemon("Pikachu", 12, 50, "Choque do Trovão", "Faísca", "Trovão", "Descarga", 25, 15, 30, 20);
+				pk1[4] = new Pokemon("Pidgeot", 2, 83, "Furacão", "Ataque de Asa", "Barra de Ar", "Ataque do Céu", 30, 15, 20, 25);
+				pk1[5] = new Pokemon("Golem", 5, 80, "Ponta de Pedra", "Explosão", "Terremoto", "Chuva de Pedra", 10, 30, 24, 18);
+				String nomeTreinador1 = "Red";
+				Treinador tr1 = new Treinador(nomeTreinador1, pk1);
+				Pokemon[] pk2 = new Pokemon[]{definePkm()};
+				Treinador pkmSelvagem = new Treinador(pk2[0].getNome(), pk2);
+				setarBatalha(tr1, pkmSelvagem);
+				
+			}
+		}
+		
+		public String description (){
+			return null;
+		}
+	}
+	
 	public static void main (String []args){
 		Batalha btl = new Batalha();
-		btl.addEvent(btl.new Restart());
+		btl.addEvent(btl.new Versus());
 		btl.run();
 	}
 }

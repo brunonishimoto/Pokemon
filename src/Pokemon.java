@@ -24,7 +24,7 @@ public class Pokemon {
 														  {1, 1, 1, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 1, 1, 1, 2, 1, 0},
 														  {1, 0.5, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 0.5, 0.5},
 														  {1, 2, 1, 0.5, 1, 1, 1, 1, 0.5, 0.5, 1, 1, 1, 1, 1, 2, 2, 1}
-														};		/**FALTA TERMINAR HEHE **/						
+														};					
 	
 	public Pokemon (String nome, int tipo, int hp, String nomeAtk1, String nomeAtk2,
 					String nomeAtk3, String nomeAtk4, int dano1, int dano2, int dano3, int dano4) {

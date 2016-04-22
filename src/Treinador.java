@@ -3,13 +3,15 @@ public class Treinador {
 	private String nome;
 	private Pokemon[] pokemons = new Pokemon[6];
 	private int indicePokemon = 0;
-	private int pkmAtivo = 4;
+	private int pkmAtivo;
 	
 	public Treinador (String nome, Pokemon[] pokemons) {
+		int i;
 		this.nome = nome;
-		for (int i = 0; i < 5; i++) {
+		for (i = 0; i < 5 && pokemons[i] != null; i++) {
 			this.pokemons[i] = pokemons[i];
 		}
+		pkmAtivo = i;
 	}
 	
 	public String getNome() {
