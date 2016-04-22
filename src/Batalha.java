@@ -132,21 +132,21 @@ public class Batalha extends Controller {
 		public void action (){
 			/*Setando os dois treinadores com seus respectivos pokemons*/
 			Pokemon[] pk1 = new Pokemon[6];
-			pk1[0] = new Pokemon("Charizard", "Fogo", 78, "Lança Chamas", "Super Aquecimento", "Explosão de Fogo", "Brasa", 20, 30, 24, 10);
-			pk1[1] = new Pokemon("Venosaur", "Grama", 80, "Esfera de Energia", "Folha Navalha", "Raio Solar", "Danca de Pétalas", 18, 10, 30, 20);
-			pk1[2] = new Pokemon("Blastoise", "Agua", 79, "Jato de Água", "Rajada de Bolhas", "Surf", "Hidro Bomba", 20, 10, 25, 30);
-			pk1[3] = new Pokemon("Pikachu", "Eletrico", 50, "Choque do Trovão", "Faísca", "Trovão", "Descarga", 25, 15, 30, 20);
-			pk1[4] = new Pokemon("Pidgeot", "Voador", 83, "Furacão", "Ataque de Asa", "Barra de Ar", "Ataque do Céu", 30, 15, 20, 25);
-			pk1[5] = new Pokemon("Golem", "Pedra", 80, "Ponta de Pedra", "Explosão", "Terremoto", "Chuva de Pedra", 10, 30, 24, 18);
+			pk1[0] = new Pokemon("Charizard", 9, 78, "Lança Chamas", "Super Aquecimento", "Explosão de Fogo", "Brasa", 20, 30, 24, 10);
+			pk1[1] = new Pokemon("Venosaur", 11, 80, "Esfera de Energia", "Folha Navalha", "Raio Solar", "Danca de Pétalas", 18, 10, 30, 20);
+			pk1[2] = new Pokemon("Blastoise", 10, 79, "Jato de Água", "Rajada de Bolhas", "Surf", "Hidro Bomba", 20, 10, 25, 30);
+			pk1[3] = new Pokemon("Pikachu", 12, 50, "Choque do Trovão", "Faísca", "Trovão", "Descarga", 25, 15, 30, 20);
+			pk1[4] = new Pokemon("Pidgeot", 2, 83, "Furacão", "Ataque de Asa", "Barra de Ar", "Ataque do Céu", 30, 15, 20, 25);
+			pk1[5] = new Pokemon("Golem", 5, 80, "Ponta de Pedra", "Explosão", "Terremoto", "Chuva de Pedra", 10, 30, 24, 18);
 			String nomeTreinador1 = "Red";
 			Treinador tr1 = new Treinador(nomeTreinador1, pk1);
 			Pokemon[] pk2 = new Pokemon[6];
-			pk2[0] = new Pokemon("Charizard", "Fogo", 78, "Lança Chamas", "Super Aquecimento", "Explosao de Fogo", "Brasa", 20, 30, 24, 10);
-			pk2[1] = new Pokemon("Venosaur", "Grama", 80, "Esfera de Energia", "Folha Navalha", "Raio Solar", "Danca de Petalas", 18, 10, 30, 20);
-			pk2[2] = new Pokemon("Blastoise", "Agua", 79, "Jato de Agua", "Rajada de Bolhas", "Surf", "Hidro Bomba", 20, 10, 25, 30);
-			pk2[3] = new Pokemon("Pikachu", "Eletrico", 50, "Choque do Trovão", "Faísca", "Trovão", "Descarga", 25, 15, 30, 20);
-			pk2[4] = new Pokemon("Alakazan", "Psiquico", 55, "Visão Futura", "Psiquico", "Corte Psíco", "Psybeam", 30, 25, 20, 10);
-			pk2[5] = new Pokemon("Dragonite", "Dragao", 91, "Ultrage", "Rabo de Dragão", "Dança do Dragão", "Corrida do Dragão", 28, 10, 30, 16);
+			pk2[0] = new Pokemon("Charizard", 9, 78, "Lança Chamas", "Super Aquecimento", "Explosao de Fogo", "Brasa", 20, 30, 24, 10);
+			pk2[1] = new Pokemon("Venosaur", 11, 80, "Esfera de Energia", "Folha Navalha", "Raio Solar", "Danca de Petalas", 18, 10, 30, 20);
+			pk2[2] = new Pokemon("Blastoise", 10, 79, "Jato de Agua", "Rajada de Bolhas", "Surf", "Hidro Bomba", 20, 10, 25, 30);
+			pk2[3] = new Pokemon("Pikachu", 12, 50, "Choque do Trovão", "Faísca", "Trovão", "Descarga", 25, 15, 30, 20);
+			pk2[4] = new Pokemon("Alakazan", 13, 55, "Visão Futura", "Psiquico", "Corte Psíco", "Psybeam", 30, 25, 20, 10);
+			pk2[5] = new Pokemon("Dragonite", 15, 91, "Ultrage", "Rabo de Dragão", "Dança do Dragão", "Corrida do Dragão", 28, 10, 30, 16);
 			String nomeTreinador2 = "Green";
 			Treinador tr2 = new Treinador(nomeTreinador2, pk2);
 			/*Coloca os dois treinadores e seus pokemons na batalha*/

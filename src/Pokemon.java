@@ -2,17 +2,31 @@
 
 public class Pokemon {
 	private String nome;
-	private String tipo;
+	private int tipo;
 	private int hpAtual;
 	private int maxHp;
 	private Ataque[] atk = new Ataque[4];
 	private static final double[][] MultiplicadorDano = { {1, 1, 1, 1, 1, 0.5, 1, 0, 0.5, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 														  {2, 1, 0.5, 0.5, 1, 2, 0.5, 0, 2, 1, 1, 1, 1, 0.5, 2, 1, 2, 0.5},
 														  {1, 2, 1, 1, 1, 0.5, 2, 1, 0.5, 1, 1, 2, 0.5, 1, 1, 1, 1, 1},
-														  {1, 1, 1, 0.5, 0.5, 0.5, 1, 0.5, 1, 1, 2, 0.5, 1, 1, 1, 1, 1}
+														  {1, 1, 1, 0.5, 0.5, 0.5, 1, 0.5, 1, 1, 2, 0.5, 1, 1, 1, 1, 1},
+														  {1, 1, 0, 2, 1, 2, 0.5, 1, 2, 2, 1, 0.5, 2, 1, 1, 1, 1, 1},
+														  {1, 0.5, 2, 1, 0.5, 1, 2, 1, 0.5, 2, 1, 1, 1, 1, 2, 1, 1, 1},
+														  {1, 0.5, 0.5, 0.5, 1, 1, 1, 0.5, 0.5, 0.5, 1, 2, 1, 2, 1, 1, 2, 0.5},
+														  {0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 0.5, 1},
+														  {1, 1, 1, 1, 1, 2, 1, 1, 0.5, 0.5, 0.5, 1, 0.5, 1, 2, 1, 1, 2},
+														  {1, 1, 1, 1, 1, 0.5, 2, 1, 2, 0.5, 0.5, 2, 1, 1, 2, 0.5, 1, 1},
+														  {1, 1, 1, 1, 2, 2, 1, 1, 1, 2, 0.5, 0.5, 1, 1, 1, 0.5, 1, 1},
+														  {1, 1, 0.5, 0.5, 2, 2, 0.5, 1, 0.5, 0.5, 2, 0.5, 1, 1, 1, 0.5, 1, 1},
+														  {1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 2, 0.5, 0.5, 1, 1, 0.5, 1, 1},
+														  {1, 2, 1, 2, 1, 1, 1, 1, 0.5, 1, 1, 1, 1, 0.5, 1, 1, 0, 1},
+														  {1, 1, 2, 1, 2, 1, 1, 1, 0.5, 0.5, 0.5, 2, 1, 1, 0.5, 2, 1, 1},
+														  {1, 1, 1, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 1, 1, 1, 2, 1, 0},
+														  {1, 0.5, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 0.5, 0.5},
+														  {1, 2, 1, 0.5, 1, 1, 1, 1, 0.5, 0.5, 1, 1, 1, 1, 1, 2, 2, 1}
 														};		/**FALTA TERMINAR HEHE **/						
 	
-	public Pokemon (String nome, String tipo, int hp, String nomeAtk1, String nomeAtk2,
+	public Pokemon (String nome, int tipo, int hp, String nomeAtk1, String nomeAtk2,
 					String nomeAtk3, String nomeAtk4, int dano1, int dano2, int dano3, int dano4) {
 		this.nome = nome;
 		this.tipo = tipo;
@@ -24,25 +38,32 @@ public class Pokemon {
 	}
 	
 	//Recebe o tipo do Pokemon a ser atacado, e retorna o multiplicador que ele recebe do Pokémon
-	public double getMultiplicador (String tipo2) {
-		return (MultiplicadorDano[pegaTipo(tipo)][pegaTipo(tipo2)]);
+	public double getMultiplicador (int tipo2) {
+		return (MultiplicadorDano[tipo][tipo2]);
 	}
 	
 	//Associa o tipo do Pokemon com a linha/coluna da matriz MultiplicadorDano
-	private int pegaTipo (String tipo) {
-		if (tipo.equals("Normal")) {
-			return 0;
-		}
-		if (tipo.equals("Lutador")) {
-			return 1;
-		}
-		if (tipo.equals("Voador")) {
-			return 2;
-		}
-		return 0;	/** ESSE AQUI É SÓ PARA NÃO FICAR COM ERRO, DEPOIS QUE FIZER DE TODOS EU TIRO */
-	}
+	/* 0  --> Normal
+	 * 1  --> Lutador
+	 * 2  --> Voador
+	 * 3  --> Venenoso
+	 * 4  --> Terra
+	 * 5  --> Pedra
+	 * 6  --> Inseto
+	 * 7  --> Fantasma
+	 * 8  --> Aço
+	 * 9  --> Fogo
+	 * 10 --> Água
+	 * 11 --> Grama
+	 * 12 --> Elétrico
+	 * 13 --> Psíquico
+	 * 14 --> Gelo
+	 * 15 --> Dragão
+	 * 16 --> Trevas
+	 * 17 --> Fada
+	 */
 	
-	public String getTipo () {
+	public int getTipo () {
 		return tipo;
 	}
 	
