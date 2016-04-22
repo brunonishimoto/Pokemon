@@ -45,18 +45,20 @@ public class Batalha extends Controller {
 		}
 		
 		public void action () {
-			defensor.getPokemon().mudaHP(-atacante.getPokemon().atacar(atkIndex));
+			double multiplicador = atacante.getPokemon().getMultiplicador(defensor.getPokemon().getTipo());
+			defensor.getPokemon().mudaHP(-(int) (atacante.getPokemon().atacar(atkIndex) * multiplicador));
 		}
 		
 		public String description () {
+			double multiplicador = atacante.getPokemon().getMultiplicador(defensor.getPokemon().getTipo());
 			return (atacante.getPokemon().getNome() + " de "  + atacante.getNome() +  " utilizou " + 
-					atacante.getPokemon().ataque(atkIndex)  + "!" + "\n" + 
-					defensor.getPokemon().getNome() + " de " + defensor.getNome() + 
+					atacante.getPokemon().ataque(atkIndex) + " e causou " + (int)(atacante.getPokemon().atacar(atkIndex)*multiplicador)
+					+ "de dano!" + "\n" + defensor.getPokemon().getNome() + " de " + defensor.getNome() + 
 					" esta com " + defensor.getPokemon().getHp() + "HP." + pkmDerrotado(defensor));
 		}
 	}
 	
-	/*Treinador utiliza o itme de cura em um pokemon */
+	/*Treinador utiliza o item de cura em um pokemon */
 	public class UsarItem extends Event {
 		private Treinador curador;
 		private int diferencaHp;
