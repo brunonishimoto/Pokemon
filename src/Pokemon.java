@@ -88,9 +88,15 @@ public class Pokemon {
 		return hpAtual;
 	}
 	
+	/*retorna o hp maximo do pokemon*/ //necessário para verificar se o pokemon foi capturado
+	public int getHpMax () {
+		return maxHp;
+	}
+	
 	/*retorna nome do pokemon*/
 	public String getNome (){
 		return nome;
 	}
+	
 	
 }

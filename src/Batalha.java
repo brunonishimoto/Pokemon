@@ -128,7 +128,53 @@ public class Batalha extends Controller {
 		}
 	}
 	
-
+	public class CapturarPokemon extends Event {
+		private int tipo;
+		/* 0: Poké Ball
+		 * 1: Great Ball */
+		private Random gerador = new Random();
+		private Pokemon pkmCapturado;
+		private String retorno = "";
+		private Treinador capturador;
+		
+		public CapturarPokemon (int tipo,Treinador capturador, Pokemon pkmSelvagem) {
+			super(1);
+			this.tipo = tipo;
+			this.capturador = capturador;
+			pkmCapturado = pkmSelvagem;
+		}
+		
+		public void action() {
+			int capturou = gerador.nextInt(256);
+			int valorPokeBall;
+			
+			if (tipo == 1) {
+				valorPokeBall = 8;
+			}
+			else {
+				valorPokeBall = 12;
+			}
+			
+			if (capturou > (pkmCapturado.getHpMax()*255*4)/(pkmCapturado.getHp()*valorPokeBall)) {
+				retorno.concat("Oh no!!! O Pokemon escapou!");
+			}
+			else {
+				retorno.concat("O pokemon foi capturado!");
+			}
+		}
+		
+		public String description() {
+			String tipoPokeBall;
+			if (tipo == 1) {
+				tipoPokeBall = "Great Ball";
+			}
+			else {
+				tipoPokeBall = "Poke Ball";
+			}
+			return (capturador.getNome() + " jogou uma " + tipoPokeBall + ".\n" + retorno);
+		}
+	}
+	
 	/*Inicia a batalha pokemon*/
 	public class Versus extends Event{
 		
@@ -236,12 +282,35 @@ public class Batalha extends Controller {
 				Treinador pkmSelvagem = new Treinador(pk2[0].getNome(), pk2);
 				setarBatalha(tr1, pkmSelvagem);
 				
+				
+				/*Inicio da batalha com os Pokemon selvagem*/
+				addEvent(new TrocarPokemon(4, tr1));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));	//O Pokemon selvagem ataca de forma aleatoria
+				
+				addEvent(new Atacar (0, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new UsarItem(tr1));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (0, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (0, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Fugir(tr1));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
 			}
 		}
 		
 		public String description (){
+			if (this.achouPkm <= 80) {
+				return ("Pokemon encontrado!");
+			}
 			return null;
 		}
+		
 	}
 	
 	public static void main (String []args){
