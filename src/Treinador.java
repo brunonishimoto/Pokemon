@@ -4,18 +4,30 @@ public class Treinador {
 	private Pokemon[] pokemons = new Pokemon[6];
 	private int indicePokemon = 0;
 	private int pkmAtivo;
+	private int tipoTreinador;
 	
-	public Treinador (String nome, Pokemon[] pokemons) {
+	// tipoTreinador == 1: Treinador com 6 pokemons
+	// tipoTreinador == 2: Pokemon selvagem
+	
+	public Treinador (String nome, int tipoTreinador, Pokemon[] pokemons) {
 		int i;
+		this.tipoTreinador = tipoTreinador;
 		this.nome = nome;
-		for (i = 0; i < 5 && pokemons[i] != null; i++) {
+		for (i = 0; i < 6 && pokemons[i] != null; i++) {
 			this.pokemons[i] = pokemons[i];
 		}
 		pkmAtivo = i;
 	}
 	
-	public String getNome() {
+	public String getNome () {
 		return nome;
+	}
+	
+	// Retorna true caso o treinador seja um pokemon selvagem
+	public boolean trPokemon (){
+		if(tipoTreinador == 2)
+			return true;
+		return false;
 	}
 	
 	public Pokemon getPokemon () {

@@ -27,7 +27,7 @@ public class Controller {
 			es.removeCurrent();
 			segundoEvt = true;
 			// Uma comparação para ver qual evento deverá ser rodado primeiro só é feita caso exista mais de um evento
-			if( (next = segundo = es.getNext()) != null ){
+			if( atual.eventoBatalha() && (next = segundo = es.getNext()) != null ){
 				// Se a prioridade do segundo for maior ele é executado primeiro
 				if(next.getPrioridade() < atual.getPrioridade()){
 					primeiro = next;
