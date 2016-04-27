@@ -308,7 +308,7 @@ public class Batalha extends Controller {
 				pk1[5] = new Pokemon("Golem", 5, 80, "Ponta de Pedra", "Explosão", "Terremoto", "Chuva de Pedra", 10, 30, 24, 18);
 				String nomeTreinador1 = "Red";
 				Treinador tr1 = new Treinador(nomeTreinador1, 1, pk1);
-				Pokemon[] pk2 = new Pokemon[]{encontrado, null};
+				Pokemon[] pk2 = new Pokemon[]{encontrado};
 				Treinador pkmSelvagem = new Treinador(pk2[0].getNome(), 2, pk2);
 				setarBatalha(tr1, pkmSelvagem);
 				
@@ -354,7 +354,7 @@ public class Batalha extends Controller {
 		btl.addEvent(btl.new Versus());
 		btl.run();
 		btl.addEvent(btl.new AndarChao());
-		btl.addEvent(btl.new AndarGramado() );
+		btl.addEvent(btl.new AndarGramado());
 		btl.run();
 	}
 }
