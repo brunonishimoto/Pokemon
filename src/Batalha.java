@@ -68,12 +68,15 @@ public class Batalha extends Controller {
 			if(!pkmDerrotado)
 				retornar = retornar.concat(defensor.getPokemon().getHp() + "HP.");
 			else{
+				//Se o Pokemon do defensor morreu
 				retornar = retornar.concat("0HP e foi derrotado!\n");
 				if(acabou){
+					//Se todos os Pokemons do defensor já estiverem mortos
 					if(!defensor.trPokemon())
 						retornar = retornar.concat(defensor.getNome()  + " não possui mais pokemons disponíveis. " + defensor.getNome() +  " perdeu a Batalha!");
 				}
 				else
+					//Se o defensor tiver Pokemon vivo
 					retornar = retornar.concat(nomePkmAtacado + nomeDefensor + " foi substituido por " + defensor.getPokemon().getNome());
 			}
 			return retornar;
@@ -119,6 +122,7 @@ public class Batalha extends Controller {
 		private int pkmIndex;
 		private Treinador trocador;
 		private String pkmAnterior;
+		private String retorno = "";
 		
 		public TrocarPokemon (int index, Treinador trocador){
 			super(2, 1);
@@ -127,12 +131,19 @@ public class Batalha extends Controller {
 		}
 		
 		public void action () {
-			pkmAnterior = trocador.getPokemon().getNome();
-			trocador.trocaPokemon(pkmIndex);
+			if (trocador.getPokemon().getHp() != 0) {
+				pkmAnterior = trocador.getPokemon().getNome();
+				trocador.trocaPokemon(pkmIndex);
+			}
+			else {
+				//Se o Pokemon que o treinador queria trocar está morto, então troca pelo próximo Pokemon vivo
+				retorno.concat("O Pokemon desejado está morto!\n");
+				trocador.proxPkmAtivo();
+			}
 		}
 		
 		public String description () {
-			return (trocador.getNome() + " substituiu " + pkmAnterior + " por " + trocador.getPokemon().getNome() + ".");
+			return (retorno.concat(trocador.getNome() + " substituiu " + pkmAnterior + " por " + trocador.getPokemon().getNome() + "."));
 		}
 	}
 	
@@ -335,7 +346,55 @@ public class Batalha extends Controller {
 				addEvent(new Atacar (0, tr1, pkmSelvagem));
 				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
 				
-				addEvent(new Fugir(tr1));
+				addEvent(new Atacar (3, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (2, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (1, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new TrocarPokemon (2, tr1));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (2, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (3, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (1, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (0, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (3, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (2, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (0, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (3, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (1, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (2, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (0, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (3, tr1, pkmSelvagem));
+				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
+				
+				addEvent(new Atacar (2, tr1, pkmSelvagem));
 				addEvent(new Atacar (gerador.nextInt(4), pkmSelvagem, tr1));
 			}
 		}

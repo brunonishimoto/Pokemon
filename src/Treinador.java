@@ -48,7 +48,7 @@ public class Treinador {
 		pkmAtivo--;
 	}
 	
-	//Caso o Pokemon atual seja morto, pega o próximo Pokemon vivos
+	//Caso o Pokemon atual seja morto, pega o próximo Pokemon vivo
 	public void proxPkmAtivo (){
 		for(int i = 0; i < 6; i++){
 			if (pokemons[i].getHp() > 0){
